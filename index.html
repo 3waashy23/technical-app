@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technical Suite</title>
+  <style>
+    :root{
+      --gold:#ffd700;
+      --navy:#222d5d;
+      --bg:#f6f7fb;
+      --border: rgba(34,45,93,0.12);
+      --shadow: 0 18px 40px rgba(0,0,0,.18);
+      --soft:#eef0f4;
+      --softText: rgba(34,45,93,.78);
+
+      --fs-11: 11px;
+      --fs-12: 12px;
+      --fs-13: 13px;
+      --fs-14: 14px;
+      --fs-16: 16px;
+      --fs-18: 18px;
+
+      --w-regular: 400;
+      --w-medium: 500;
+      --w-semibold: 600;
+    }
+
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family: Arial, sans-serif;
+      background:var(--bg);
+      color:var(--navy);
+      font-weight: var(--w-regular);
+      overflow-x:hidden;
+      font-size: var(--fs-13);
+    }
+
+    .phone{width:100%; max-width:480px; margin:0 auto; position:relative;}
+    .screen{display:flex; flex-direction:column; min-height:100vh;}
+    .hidden{display:none !important;}
+
+    /* ===== HEADER ===== */
+    .mini-header{
+      background: var(--gold);
+      padding: 18px 16px;
+      border-bottom-left-radius: 26px;
+      border-bottom-right-radius: 26px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .back-btn{
+      width:52px;height:52px;border-radius:18px;
+      border:none;
+      background: rgba(255,255,255,.55);
+      font-size:20px;
+      cursor:pointer;
+      color:var(--navy);
+      box-shadow: 0 10px 18px rgba(0,0,0,.10);
+      flex:0 0 auto;
+    }
+    .mini-title{
+      font-size: 26px;
+      font-weight: var(--w-semibold);
+      letter-spacing: .2px;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer{
+      background:var(--gold);
+      margin-top:auto;
+      padding:12px 0;
+      text-align:center;
+      font-size:var(--fs-12);
+      font-weight:var(--w-medium);
+      color:#000;
+      border-top-left-radius:22px;
+      border-top-right-radius:22px;
+    }
+
+    /* ===== LAYOUT ===== */
+    .page{
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      flex:1;
+    }
+
+    /* ===== DASHBOARD ===== */
+    .dash-card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:26px;
+      padding:16px;
+      box-shadow: 0 12px 22px rgba(0,0,0,.06);
+    }
+    .dash-actions{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    @media (max-width:360px){ .dash-actions{grid-template-columns: repeat(2,1fr);} }
+    .tile{
+      border:none;
+      background:#fff;
+      border-radius:26px;
+      padding:16px 10px;
+      min-height:106px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      cursor:pointer;
+      box-shadow: 0 10px 18px rgba(0,0,0,.06);
+    }
+    .tile .ico{
+      width:50px;height:50px;border-radius:50%;
+      background: rgba(255,215,0,.24);
+      display:flex;align-items:center;justify-content:center;
+      font-size:22px;
+    }
+    .tile .txt{font-size:15px;font-weight:var(--w-semibold);}
+
+    /* ===== FILTER ROW (From + To + Section in one line) ===== */
+    .filter-row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .date-box{
+      flex:1 1 140px;
+      background: var(--soft);
+      border-radius: 18px;
+      padding: 10px 12px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 0;
+    }
+    .date-label{
+      font-size: var(--fs-12);
+      font-weight:var(--w-medium);
+      color: var(--softText);
+      white-space: nowrap;
+    }
+    .date-input{
+      flex:1;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--navy);
+      font-size: var(--fs-12);
+      padding: 6px 6px;
+      min-width: 0;
+    }
+    .select{
+      flex:1 1 160px;
+      border-radius: 18px;
+      padding: 12px 12px;
+      border:1px solid rgba(34,45,93,.18);
+      background:#fff;
+      color:var(--navy);
+      font-size: var(--fs-14);
+      font-weight: var(--w-medium);
+      min-width: 0;
+    }
+
+    /* ===== UNIVERSAL KPI SUMMARY CARD ===== */
+    .kpi-summary{
+      background:#fff;
+      border-radius:22px;
+      padding:14px;
+      box-shadow:0 10px 22px rgba(0,0,0,.06);
+      border:1px solid var(--border);
+    }
+    .kpi-summary .kpi-top{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+    }
+    .kpi-summary .kpi-title{
+      font-weight:var(--w-semibold);
+      font-size: var(--fs-16);
+    }
+    .kpi-summary .kpi-sub{
+      opacity:.75;
+      font-size: var(--fs-13);
+      margin-top:2px;
+    }
+    .kpi-summary .kpi-total{
+      text-align:right;
+      padding-left:10px;
+    }
+    .kpi-summary .kpi-total .lbl{
+      font-size: var(--fs-12);
+      opacity:.75;
+      font-weight:var(--w-medium);
+    }
+    .kpi-summary .kpi-total .val{
+      font-size:34px;
+      font-weight:var(--w-semibold);
+      line-height:1;
+    }
+    .kpi-summary .stack{
+      margin-top:12px;
+      height:16px;
+      border-radius:999px;
+      overflow:hidden;
+      background: rgba(34,45,93,.08);
+      display:flex;
+      border:1px solid rgba(34,45,93,.06);
+    }
+    .kpi-summary .seg{height:100%;}
+    .kpi-summary .seg-a{background:#d65a44;}  /* red */
+    .kpi-summary .seg-b{background:#f1b331;}  /* yellow */
+    .kpi-summary .seg-c{background:#6b5bd2;}  /* purple */
+    .kpi-summary .seg-d{background:#48b26b;}  /* green */
+    .kpi-summary .legend{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 14px;
+    }
+    @media (max-width: 360px){ .kpi-summary .legend{ grid-template-columns: 1fr; } }
+    .kpi-summary .leg-item{display:flex;align-items:center;gap:10px;}
+    .kpi-summary .dot{width:12px;height:12px;border-radius:999px;}
+    .kpi-summary .dot-a{background:#d65a44;}
+    .kpi-summary .dot-b{background:#f1b331;}
+    .kpi-summary .dot-c{background:#6b5bd2;}
+    .kpi-summary .dot-d{background:#48b26b;}
+    .kpi-summary .leg-label{font-weight:var(--w-medium);white-space:nowrap;}
+    .kpi-summary .leg-val{margin-left:auto;opacity:.85;font-weight:var(--w-medium);white-space:nowrap;}
+
+    /* ===== CONTROLS (Status dropdown + Search on same line) ===== */
+    .controls{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .search{
+      flex: 1 1 220px;
+      border:1px solid rgba(34,45,93,.18);
+      border-radius:18px;
+      padding: 12px 12px;
+      font-size: var(--fs-13);
+      color:var(--navy);
+      min-width: 0;
+      outline:none;
+      background:#fff;
+    }
+
+    /* ===== TABLE PANEL ===== */
+    .panel{
+      background:#fff;
+      border-radius: 22px;
+      padding: 10px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+      border: 1px solid var(--border);
+      overflow:hidden;
+    }
+    .table-wrap{overflow:auto; border-radius:16px;}
+    table{width:100%; border-collapse:collapse; min-width: 900px;}
+    thead th{
+      background: rgba(34,45,93,.10);
+      color: var(--navy);
+      text-align:left;
+      padding: 10px;
+      font-size: var(--fs-12);
+      position:sticky;
+      top:0;
+      backdrop-filter: blur(6px);
+      font-weight: var(--w-medium);
+      white-space:nowrap;
+    }
+    tbody td{
+      padding: 10px;
+      border-bottom: 1px solid rgba(0,0,0,.06);
+      font-size: var(--fs-13);
+      vertical-align:top;
+      white-space:nowrap;
+    }
+    .empty{padding:16px; text-align:center; opacity:.7;}
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight: var(--w-medium);
+      font-size: var(--fs-12);
+      border: 1px solid rgba(34,45,93,.10);
+      background: rgba(34,45,93,.04);
+      white-space:nowrap;
+    }
+
+    .eye{
+      border:none;
+      background: rgba(255,215,0,.35);
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor:pointer;
+      color: var(--navy);
+      font-weight: var(--w-medium);
+      font-size: var(--fs-13);
+    }
+
+    /* ===== FLOATING ACTION BUTTON (centered) ===== */
+    .fab{
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 76px; /* above footer */
+      z-index: 50;
+      border:none;
+      background: var(--gold);
+      color: var(--navy);
+      border-radius: 18px;
+      padding: 14px 18px;
+      font-weight: var(--w-semibold);
+      box-shadow: 0 16px 28px rgba(0,0,0,.20);
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-size: var(--fs-14);
+      white-space:nowrap;
+    }
+
+    /* ===== MODALS ===== */
+    .modal{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.40);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index: 999;
+      opacity: 0;
+      pointer-events:none;
+      transition: opacity .18s ease;
+      padding: 12px;
+    }
+    .modal.show{opacity: 1; pointer-events:auto;}
+    .sheet{
+      width: 100%;
+      max-width: 820px;
+      max-height: calc(100dvh - 24px);
+      background:#fff;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      transform: translateY(10px) scale(.985);
+      transition: transform .18s ease;
+    }
+    .modal.show .sheet{ transform: translateY(0) scale(1); }
+    .sheet-head{
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      background: var(--navy);
+      color:#fff;
+      padding: 14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      flex: 0 0 auto;
+    }
+    .sheet-title{font-weight:var(--w-semibold); font-size: 20px;}
+    .xbtn{
+      border:none;
+      background: rgba(255,255,255,.18);
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 22px;
+      cursor:pointer;
+      color:#fff;
+      font-weight: var(--w-medium);
+      line-height: 1;
+    }
+    .sheet-body{
+      padding: 14px;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+      flex: 1 1 auto;
+    }
+    .sheet-foot{
+      padding: 12px 14px;
+      background:#fafafa;
+      border-top:1px solid rgba(0,0,0,.08);
+      display:flex;
+      justify-content:flex-end;
+      gap: 10px;
+      flex: 0 0 auto;
+    }
+
+    .field{display:flex; flex-direction:column; gap:6px; margin-bottom:12px;}
+    .label{font-size: var(--fs-12); color: var(--softText); font-weight: var(--w-medium); letter-spacing:.2px;}
+    .input, .textarea, .select2{
+      border:1px solid rgba(34,45,93,.18);
+      border-radius:16px;
+      padding:12px;
+      background:#fff;
+      color:var(--navy);
+      font-size: var(--fs-13);
+      outline:none;
+    }
+    .textarea{min-height:100px; resize:none;}
+    .grid2{display:grid; grid-template-columns: 1fr 1fr; gap: 12px;}
+    .grid3{display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;}
+    @media (max-width: 760px){ .grid3{grid-template-columns:1fr;} }
+    @media (max-width: 520px){ .grid2{grid-template-columns:1fr;} }
+
+    .btn{
+      border:none;
+      border-radius: 16px;
+      padding: 12px 16px;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      font-size: var(--fs-14);
+      font-weight: var(--w-medium);
+      white-space:nowrap;
+    }
+    .btn-yellow{background:var(--gold); color:var(--navy); box-shadow:0 10px 18px rgba(0,0,0,.10);}
+    .btn-outline{background:#fff;color:var(--navy);border:1px solid rgba(34,45,93,.20);}
+
+  
+    /* ================= DASHBOARD HEADER (RESTORED) ================= */
+    .header-wrapper{
+      background: linear-gradient(180deg, var(--gold) 0%, #c9b458 100%);
+      padding: 16px;
+      padding-bottom: 20px;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+    .top-bar{display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px;}
+    .top-bar .title{
+      font-size: 34px;
+      font-weight: var(--w-semibold);
+      color:#000;
+      line-height:1.1;
+    }
+    .icons{display:flex; gap: 10px;}
+    .icon-btn{
+      width: 56px; height: 56px;
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size: 20px;
+      box-shadow: 0 10px 18px rgba(0,0,0,0.18);
+      user-select:none;
+      border:none;
+      cursor:pointer;
+    }
+    .notify{background:#ffeb3b; color:var(--navy);}
+    .settings{background:var(--navy); color:#fff;}
+    .logout{background:#ff5c5c; color:#fff;}
+
+    .profile-card{
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(7px);
+      border-radius: 28px;
+      padding: 18px 16px;
+      text-align:center;
+    }
+    .avatar{
+      width: 92px; height: 92px; border-radius:50%;
+      background: rgba(255,255,255,0.32);
+      display:flex; align-items:center; justify-content:center;
+      font-size: 42px;
+      margin: 0 auto 10px;
+    }
+    .name{font-size: 24px; font-weight:var(--w-semibold); color:#000;}
+    .empid{font-size: var(--fs-14); color:#000; margin-top:6px; margin-bottom: 12px;}
+
+    .stats{display:flex; justify-content:space-between; gap: 10px; padding-top:6px;}
+    .stat-item{flex:1; text-align:center; padding: 6px 4px;}
+    .stat-icon{
+      width: 54px; height: 54px; border-radius:50%;
+      background: rgba(255,255,255,0.22);
+      display:flex; align-items:center; justify-content:center;
+      margin: 0 auto 8px;
+      font-size: 20px;
+      color:#000;
+    }
+    .stat-value{font-size: 20px; font-weight:var(--w-medium); color:#000; margin-bottom:4px;}
+    .stat-label{font-size: var(--fs-13); color:#000;}
+
+    /* ================= DASHBOARD QUICK ACTIONS (RESTORED) ================= */
+    .actions-sheet{
+      background:#fff;
+      border-radius: 30px;
+      padding: 18px 16px;
+      box-shadow: 0 -6px 20px rgba(0,0,0,0.05);
+      border: 1px solid rgba(34,45,93,.10);
+    }
+    .quick-actions{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 360px){ .quick-actions{grid-template-columns: repeat(2, 1fr);} }
+
+    .card{
+      border-radius: 28px;
+      padding: 14px 10px;
+      min-height: 104px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      cursor:pointer;
+      border: none;
+      box-shadow: 0 10px 18px rgba(0,0,0,.06);
+    }
+    .card .bubble{
+      width: 56px; height: 56px;
+      border-radius: 999px;
+      display:flex; align-items:center; justify-content:center;
+      background: rgba(255,255,255,.62);
+      font-size: 22px;
+    }
+    .card .label{
+      font-size: clamp(16px, 4.6vw, 20px);
+      font-weight: var(--w-semibold);
+      color: var(--navy);
+      line-height: 1.1;
+      text-align:center;
+      letter-spacing: .1px;
+    }
+
+    .card.leave{background: rgba(255, 140, 165, 0.18);}
+    .card.manage{background: rgba(110, 200, 255, 0.18);}
+    .card.attend{background: rgba(160, 160, 255, 0.20);}
+    .card.dash{background: rgba(255, 220, 140, 0.22);}
+    .card.shift{background: rgba(180, 255, 150, 0.22);}
+    .card.tech{background: rgba(150, 255, 230, 0.22);}
+
+    
+    
+/* ================= TECHNICAL MENU LIST (RESTORED) ================= */
+    .menu-panel{
+      background:#fff;
+      border-radius: 26px;
+      padding: 10px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+      border: 1px solid rgba(34,45,93,.10);
+    }
+    .menu-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 16px 14px;
+      border-radius: 22px;
+      cursor:pointer;
+    }
+    .menu-item + .menu-item{ margin-top: 10px; }
+    .menu-left{display:flex; align-items:center; gap: 14px;}
+    .menu-ico{
+      width: 56px; height: 56px;
+      border-radius: 18px;
+      display:flex; align-items:center; justify-content:center;
+      background: rgba(255,215,0,.22);
+      font-size: 22px;
+    }
+    .menu-text{
+      font-size: 22px;
+      font-weight: var(--w-medium);
+      color: var(--navy);
+    }
+    .chev{
+      font-size: 26px;
+      color: rgba(34,45,93,.55);
+      font-weight: var(--w-semibold);
+    }
+
+
+    /* ================= MOBILE TYPOGRAPHY SYSTEM (FIX) ================= */
+    :root{
+      --t-title: 18px;
+      --t-subtitle: 15px;
+      --t-body: 13px;
+      --t-small: 12px;
+      --t-card: 14px;
+      --t-kpi: 20px;
+    }
+
+    /* Global base */
+    body{ font-size: var(--t-body); }
+
+    /* Mini headers across inner pages */
+    .mini-header{
+      padding: 12px 14px !important;
+      border-bottom-left-radius: 22px !important;
+      border-bottom-right-radius: 22px !important;
+    }
+    .mini-title{
+      font-size: var(--t-title) !important;
+      font-weight: var(--w-semibold) !important;
+    }
+    .back-btn{
+      width: 42px !important;
+      height: 42px !important;
+      border-radius: 14px !important;
+      font-size: 18px !important;
+    }
+
+    /* Dashboard header */
+    .top-bar .title{
+      font-size: 22px !important;
+      letter-spacing: .2px;
+    }
+    .icon-btn{
+      width: 38px !important;
+      height: 38px !important;
+      font-size: 16px !important;
+      box-shadow: 0 8px 14px rgba(0,0,0,0.16) !important;
+    }
+    .avatar{
+      width: 64px !important;
+      height: 64px !important;
+      font-size: 28px !important;
+    }
+    .name{
+      font-size: 18px !important;
+    }
+    .empid{
+      font-size: 13px !important;
+      margin-bottom: 10px !important;
+    }
+    .stat-icon{
+      width: 42px !important;
+      height: 42px !important;
+      font-size: 16px !important;
+    }
+    .stat-value{
+      font-size: 16px !important;
+      line-height: 1.15 !important;
+    }
+    .stat-label{
+      font-size: 12px !important;
+    }
+
+    /* Dashboard tiles (cards) */
+    .actions-sheet{ padding: 14px 12px !important; }
+    .quick-actions{ gap: 10px !important; }
+    .card{
+      min-height: 76px !important;
+      padding: 10px 8px !important;
+      border-radius: 22px !important;
+      gap: 8px !important;
+    }
+    .card .bubble{
+      width: 38px !important;
+      height: 38px !important;
+      font-size: 16px !important;
+    }
+    .card .label{
+      font-size: 13px !important;
+      line-height: 1.05 !important;
+      font-weight: var(--w-semibold) !important;
+    }
+
+    /* Technical menu list */
+    .menu-panel{ border-radius: 22px !important; padding: 8px !important; }
+    .menu-item{
+      padding: 12px 12px !important;
+      border-radius: 18px !important;
+    }
+    .menu-ico{
+      width: 44px !important;
+      height: 44px !important;
+      border-radius: 14px !important;
+      font-size: 18px !important;
+    }
+    .menu-text{
+      font-size: 15px !important;
+      font-weight: var(--w-medium) !important;
+    }
+    .chev{ font-size: 22px !important; }
+
+    /* Very small phones */
+    @media (max-width: 360px){
+      .top-bar .title{ font-size: 20px !important; }
+      .card{ min-height: 72px !important; }
+      .card .bubble{ width: 36px !important; height: 36px !important; font-size: 15px !important; }
+      .card .label{ font-size: 12.5px !important; }
+      .menu-text{ font-size: 14px !important; }
+    }
+
+</style>
+</head>
+
+<body>
+<div class="phone">
+
+    <!-- ================= DASHBOARD (RESTORED) ================= -->
+  <div id="screen-dashboard" class="screen">
+    <div class="header-wrapper">
+      <div class="top-bar">
+        <div class="title">Dashboard</div>
+        <div class="icons">
+          <button class="icon-btn notify" type="button" title="Notifications">🔔</button>
+          <button class="icon-btn settings" type="button" title="Settings">⚙️</button>
+          <button class="icon-btn logout" type="button" title="Logout">⦸</button>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <div class="avatar">👤</div>
+        <div class="name">Abdisamad Ali</div>
+        <div class="empid">659000019</div>
+
+        <div class="stats">
+          <div class="stat-item">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-value">39.89 hours</div>
+            <div class="stat-label">Hours Worked</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">🌴</div>
+            <div class="stat-value">24.5 days</div>
+            <div class="stat-label">Leaves Left</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" style="padding-top:14px;">
+      <div class="actions-sheet">
+        <div class="quick-actions">
+          <button class="card leave" type="button">
+            <div class="bubble">📄</div>
+            <div class="label">Leave</div>
+          </button>
+
+          <button class="card manage" type="button">
+            <div class="bubble">💼</div>
+            <div class="label">Managment</div>
+          </button>
+
+          <button class="card attend" type="button">
+            <div class="bubble">🧮</div>
+            <div class="label">Attendance</div>
+          </button>
+
+          <button class="card dash" type="button">
+            <div class="bubble">📊</div>
+            <div class="label">Dashboard</div>
+          </button>
+
+          <button class="card shift" type="button">
+            <div class="bubble">🕒</div>
+            <div class="label">Shift</div>
+          </button>
+
+          <button class="card tech" id="goTechnical" type="button">
+            <div class="bubble">🛠️</div>
+            <div class="label">Technical</div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">© 2025</footer>
+  </div>
+
+
+  <!-- ================= TECHNICAL MENU (RESTORED) ================= -->
+  <div id="screen-technical" class="screen hidden">
+    <div class="mini-header">
+      <button class="back-btn" id="backDash" type="button">←</button>
+      <div class="mini-title">Technical</div>
+    </div>
+
+    <div class="page">
+      <div class="menu-panel">
+        <div class="menu-item" id="goNetwork" role="button" tabindex="0">
+          <div class="menu-left">
+            <div class="menu-ico">🎫</div>
+            <div class="menu-text">Network Ticket</div>
+          </div>
+          <div class="chev">›</div>
+        </div>
+
+        <div class="menu-item" id="goHealth" role="button" tabindex="0">
+          <div class="menu-left">
+            <div class="menu-ico">🩺</div>
+            <div class="menu-text">System Health Check</div>
+          </div>
+          <div class="chev">›</div>
+        </div>
+
+        <div class="menu-item" id="goIncident" role="button" tabindex="0">
+          <div class="menu-left">
+            <div class="menu-ico">📓</div>
+            <div class="menu-text">Incident Log</div>
+          </div>
+          <div class="chev">›</div>
+        </div>
+
+        <div class="menu-item" id="goNight" role="button" tabindex="0">
+          <div class="menu-left">
+            <div class="menu-ico">🌙</div>
+            <div class="menu-text">Night Operation / Maintenance</div>
+          </div>
+          <div class="chev">›</div>
+        </div>
+      </div>
+
+      <div style="opacity:.7; font-size:var(--fs-13); padding-left:6px;">
+        Tip: “Network Ticket” opens the ticket dashboard page.
+      </div>
+    </div>
+
+    <footer class="footer">© 2025</footer>
+  </div>
+
+
+<!-- ================= NETWORK ================= -->
+  <div id="screen-network" class="screen hidden">
+    <div class="mini-header">
+      <button class="back-btn" id="backTechFromNetwork" type="button">←</button>
+      <div class="mini-title">Network Tickets</div>
+    </div>
+
+    <div class="page">
+      <div class="filter-row">
+        <div class="date-box">
+          <div class="date-label">From</div>
+          <input class="date-input" id="nFrom" type="date"/>
+        </div>
+        <div class="date-box">
+          <div class="date-label">To</div>
+          <input class="date-input" id="nTo" type="date"/>
+        </div>
+        <select class="select" id="nSection">
+          <option value="All">All sections</option>
+          <option value="O&M">O&amp;M</option>
+          <option value="Core">Core</option>
+          <option value="RAN">RAN</option>
+          <option value="IT">IT</option>
+        </select>
+      </div>
+
+      <!-- KPI Summary (generic component) -->
+      <div class="kpi-summary" id="networkSummaryCard">
+        <div class="kpi-top">
+          <div>
+            <div class="kpi-title">Ticket Summary</div>
+            <div class="kpi-sub">Numbers + percentages by status</div>
+          </div>
+          <div class="kpi-total">
+            <div class="lbl">Total</div>
+            <div class="val" id="nTotal">0</div>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="seg seg-a" id="nSegOpen" style="width:0%"></div>
+          <div class="seg seg-b" id="nSegProgress" style="width:0%"></div>
+          <div class="seg seg-c" id="nSegNoc" style="width:0%"></div>
+          <div class="seg seg-d" id="nSegClosed" style="width:0%"></div>
+        </div>
+
+        <div class="legend">
+          <div class="leg-item"><span class="dot dot-a"></span><span class="leg-label">Open</span><span class="leg-val" id="nLblOpen">0 (0%)</span></div>
+          <div class="leg-item"><span class="dot dot-b"></span><span class="leg-label">In Progress</span><span class="leg-val" id="nLblProgress">0 (0%)</span></div>
+          <div class="leg-item"><span class="dot dot-c"></span><span class="leg-label">NOC Confirmation</span><span class="leg-val" id="nLblNoc">0 (0%)</span></div>
+          <div class="leg-item"><span class="dot dot-d"></span><span class="leg-label">Closed</span><span class="leg-val" id="nLblClosed">0 (0%)</span></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <select class="select" id="nStatus">
+          <option value="All">All statuses</option>
+          <option value="Open">Open</option>
+          <option value="In Progress">In Progress</option>
+          <option value="NOC Confirmation">NOC Confirmation</option>
+          <option value="Closed">Closed</option>
+        </select>
+        <input class="search" id="nSearch" type="search" placeholder="Search ticket, text, section, region..."/>
+      </div>
+
+      <div class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>TCK</th>
+                <th>Created At</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Section</th>
+                <th>Region</th>
+                <th>Res Time</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="nBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <button class="fab" id="nFab" type="button">＋ New Ticket</button>
+    <footer class="footer">© 2025</footer>
+  </div>
+
+  <!-- ================= HEALTH ================= -->
+  <div id="screen-health" class="screen hidden">
+    <div class="mini-header">
+      <button class="back-btn" id="backTechFromHealth" type="button">←</button>
+      <div class="mini-title">System Health Check</div>
+    </div>
+
+    <div class="page">
+      <div class="filter-row">
+        <div class="date-box">
+          <div class="date-label">From</div>
+          <input class="date-input" id="hFrom" type="date"/>
+        </div>
+        <div class="date-box">
+          <div class="date-label">To</div>
+          <input class="date-input" id="hTo" type="date"/>
+        </div>
+        <select class="select" id="hSection">
+          <option value="All">All sections</option>
+          <option value="IT">IT</option>
+          <option value="Core">Core</option>
+          <option value="Transmission">Transmission</option>
+          <option value="RAN">RAN</option>
+        </select>
+      </div>
+
+      <div class="kpi-summary" id="healthSummaryCard">
+        <div class="kpi-top">
+          <div>
+            <div class="kpi-title">Health Summary</div>
+            <div class="kpi-sub">Numbers + percentages by status</div>
+          </div>
+          <div class="kpi-total">
+            <div class="lbl">Total</div>
+            <div class="val" id="hTotal">0</div>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="seg seg-a" id="hSegWorking" style="width:0%"></div>
+          <div class="seg seg-b" id="hSegIssue" style="width:0%"></div>
+          <div class="seg seg-c" id="hSegAction" style="width:0%"></div>
+          <div class="seg seg-d" id="hSegHealthy" style="width:0%"></div>
+        </div>
+
+        <div class="legend">
+          <div class="leg-item"><span class="dot dot-a"></span><span class="leg-label">Working Properly</span><span class="leg-val" id="hLblWorking">0 (0%)</span></div>
+          <div class="leg-item"><span class="dot dot-b"></span><span class="leg-label">Issue Found</span><span class="leg-val" id="hLblIssue">0 (0%)</span></div>
+          <div class="leg-item"><span class="dot dot-c"></span><span class="leg-label">Action Required</span><span class="leg-val" id="hLblAction">0 (0%)</span></div>
+          <div class="leg-item"><span class="dot dot-d"></span><span class="leg-label">Healthy Rate</span><span class="leg-val" id="hLblHealthy">0 (0%)</span></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <select class="select" id="hStatus">
+          <option value="All">All statuses</option>
+          <option value="Working Properly">Working Properly</option>
+          <option value="Issue Found">Issue Found</option>
+          <option value="Action Required">Action Required</option>
+        </select>
+        <input class="search" id="hSearch" type="search" placeholder="Search equipment, location, section..."/>
+      </div>
+
+      <div class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Section</th>
+                <th>Equipment</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Frequency</th>
+                <th>Checked By</th>
+                <th>Next Check</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="hBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <button class="fab" id="hFab" type="button">＋ New Check</button>
+    <footer class="footer">© 2025</footer>
+  </div>
+
+  <!-- ================= INCIDENT LOG ================= -->
+  <div id="screen-incident" class="screen hidden">
+    <div class="mini-header">
+      <button class="back-btn" id="backTechFromIncident" type="button">←</button>
+      <div class="mini-title">Incident Log</div>
+    </div>
+
+    <div class="page">
+      <div class="filter-row">
+        <div class="date-box">
+          <div class="date-label">From</div>
+          <input class="date-input" id="iFrom" type="date"/>
+        </div>
+        <div class="date-box">
+          <div class="date-label">To</div>
+          <input class="date-input" id="iTo" type="date"/>
+        </div>
+        <select class="select" id="iSection">
+          <option value="All">All sections</option>
+          <option value="NOC">NOC</option>
+          <option value="Core">Core</option>
+          <option value="RAN">RAN</option>
+          <option value="IT">IT</option>
+        </select>
+      </div>
+
+      <div class="kpi-summary" id="incidentSummaryCard">
+        <div class="kpi-top">
+          <div>
+            <div class="kpi-title">Incident Summary</div>
+            <div class="kpi-sub">Numbers + percentages by status</div>
+          </div>
+          <div class="kpi-total">
+            <div class="lbl">Total</div>
+            <div class="val" id="iTotal">0</div>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="seg seg-a" id="iSegOpen" style="width:0%"></div>
+          <div class="seg seg-b" id="iSegInvestigating" style="width:0%"></div>
+          <div class="seg seg-c" id="iSegResolved" style="width:0%"></div>
+          <div class="seg seg-d" id="iSegClosed" style="width:0%"></div>
+        </div>
+
+        <div class="legend">
+          <div class="leg-item"><span class="dot dot-a"></span><span class="leg-label">Open</span><span class="leg-val" id="iLblOpen">0 (0%)</span></div>
+          <div class="leg-item"><span class="dot dot-b"></span><span class="leg-label">Investigating</span><span class="leg-val" id="iLblInvestigating">0 (0%)</span></div>
+          <div class="leg-item"><span class="dot dot-c"></span><span class="leg-label">Resolved</span><span class="leg-val" id="iLblResolved">0 (0%)</span></div>
+          <div class="leg-item"><span class="dot dot-d"></span><span class="leg-label">Closed</span><span class="leg-val" id="iLblClosed">0 (0%)</span></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <select class="select" id="iStatus">
+          <option value="All">All statuses</option>
+          <option value="Open">Open</option>
+          <option value="Investigating">Investigating</option>
+          <option value="Resolved">Resolved</option>
+          <option value="Closed">Closed</option>
+        </select>
+        <input class="search" id="iSearch" type="search" placeholder="Search code, type, region, severity..."/>
+      </div>
+
+      <div class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Date</th>
+                <th>Incident Type</th>
+                <th>Section</th>
+                <th>Region</th>
+                <th>Severity</th>
+                <th>Status</th>
+                <th>Reported By</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="iBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <button class="fab" id="iFab" type="button">＋ Create Incident</button>
+    <footer class="footer">© 2025</footer>
+  </div>
+
+  <!-- ================= NIGHT OPERATION / MAINTENANCE ================= -->
+  <div id="screen-night" class="screen hidden">
+    <div class="mini-header">
+      <button class="back-btn" id="backTechFromNight" type="button">←</button>
+      <div class="mini-title">Night Operation</div>
+    </div>
+
+    <div class="page">
+      <div class="filter-row">
+        <div class="date-box">
+          <div class="date-label">From</div>
+          <input class="date-input" id="mFrom" type="date"/>
+        </div>
+        <div class="date-box">
+          <div class="date-label">To</div>
+          <input class="date-input" id="mTo" type="date"/>
+        </div>
+        <select class="select" id="mSection">
+          <option value="All">All sections</option>
+          <option value="NOC">NOC</option>
+          <option value="Core">Core</option>
+          <option value="RAN">RAN</option>
+          <option value="IT">IT</option>
+        </select>
+      </div>
+
+      <div class="kpi-summary" id="nightSummaryCard">
+        <div class="kpi-top">
+          <div>
+            <div class="kpi-title">Night Operation Summary</div>
+            <div class="kpi-sub">Numbers + percentages by status</div>
+          </div>
+          <div class="kpi-total">
+            <div class="lbl">Total</div>
+            <div class="val" id="mTotal">0</div>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="seg seg-a" id="mSegActive" style="width:0%"></div>
+          <div class="seg seg-b" id="mSegWithEffects" style="width:0%"></div>
+          <div class="seg seg-c" id="mSegPending" style="width:0%"></div>
+          <div class="seg seg-d" id="mSegCompleted" style="width:0%"></div>
+        </div>
+
+        <div class="legend">
+          <div class="leg-item"><span class="dot dot-a"></span><span class="leg-label">Active Now</span><span class="leg-val" id="mLblActive">0 (0%)</span></div>
+          <div class="leg-item"><span class="dot dot-b"></span><span class="leg-label">With Effects</span><span class="leg-val" id="mLblWithEffects">0 (0%)</span></div>
+          <div class="leg-item"><span class="dot dot-c"></span><span class="leg-label">Pending</span><span class="leg-val" id="mLblPending">0 (0%)</span></div>
+          <div class="leg-item"><span class="dot dot-d"></span><span class="leg-label">Completed</span><span class="leg-val" id="mLblCompleted">0 (0%)</span></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <select class="select" id="mStatus">
+          <option value="All">All statuses</option>
+          <option value="Active">Active</option>
+          <option value="With Effects">With Effects</option>
+          <option value="Pending">Pending</option>
+          <option value="Completed">Completed</option>
+        </select>
+        <input class="search" id="mSearch" type="search" placeholder="Search title, section, engineer..."/>
+      </div>
+
+      <div class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Request Date</th>
+                <th>Title</th>
+                <th>Priority</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Has Effects</th>
+                <th>Requested By</th>
+                <th>NOC Approval</th>
+                <th>CTO Approval</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="mBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <button class="fab" id="mFab" type="button">＋ New Operation</button>
+    <footer class="footer">© 2025</footer>
+  </div>
+
+</div>
+
+<!-- ================= MODALS: NETWORK ================= -->
+<div class="modal" id="nDetailModal">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <div class="sheet-head">
+      <div class="sheet-title">Ticket Details</div>
+      <button class="xbtn" id="nCloseDetail" type="button">✕</button>
+    </div>
+    <div class="sheet-body">
+      <div class="grid2">
+        <div class="field"><div class="label">Ticket</div><input class="input" id="nD_id" disabled></div>
+        <div class="field"><div class="label">Status</div><input class="input" id="nD_status" disabled></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><div class="label">Section</div><input class="input" id="nD_section" disabled></div>
+        <div class="field"><div class="label">Region</div><input class="input" id="nD_region" disabled></div>
+      </div>
+      <div class="field"><div class="label">Description</div><textarea class="textarea" id="nD_desc" disabled></textarea></div>
+    </div>
+    <div class="sheet-foot">
+      <button class="btn btn-outline" id="nCloseDetail2" type="button">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="nNewModal">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <div class="sheet-head">
+      <div class="sheet-title">New Ticket</div>
+      <button class="xbtn" id="nCloseNew" type="button">✕</button>
+    </div>
+    <div class="sheet-body">
+      <div class="grid3">
+        <div class="field"><div class="label">Ticket (auto)</div><input class="input" id="nN_id" disabled></div>
+        <div class="field"><div class="label">Status</div>
+          <select class="select2" id="nN_status">
+            <option>Open</option><option>In Progress</option><option>NOC Confirmation</option><option>Closed</option>
+          </select>
+        </div>
+        <div class="field"><div class="label">Priority</div>
+          <select class="select2" id="nN_priority">
+            <option>Minor</option><option>Major</option><option>Critical</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid3">
+        <div class="field"><div class="label">Section</div>
+          <select class="select2" id="nN_section">
+            <option>O&M</option><option>Core</option><option>RAN</option><option>IT</option>
+          </select>
+        </div>
+        <div class="field"><div class="label">Region</div><input class="input" id="nN_region" placeholder="e.g. Maroodi-jeex"></div>
+        <div class="field"><div class="label">Res Time</div><input class="input" id="nN_restime" placeholder="e.g. 45 min"></div>
+      </div>
+      <div class="field"><div class="label">Description</div><textarea class="textarea" id="nN_desc" placeholder="Describe the problem..."></textarea></div>
+    </div>
+    <div class="sheet-foot">
+      <button class="btn btn-outline" id="nCancelNew" type="button">Cancel</button>
+      <button class="btn btn-yellow" id="nSubmitNew" type="button">Submit</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODALS: HEALTH ================= -->
+<div class="modal" id="hNewModal">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <div class="sheet-head">
+      <div class="sheet-title">New Health Check</div>
+      <button class="xbtn" id="hCloseNew" type="button">✕</button>
+    </div>
+    <div class="sheet-body">
+      <div class="grid3">
+        <div class="field"><div class="label">ID (auto)</div><input class="input" id="hN_id" disabled></div>
+        <div class="field"><div class="label">Date</div><input class="input" id="hN_date" type="date"></div>
+        <div class="field"><div class="label">Section</div>
+          <select class="select2" id="hN_section"><option>IT</option><option>Core</option><option>Transmission</option><option>RAN</option></select>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field"><div class="label">Equipment</div><input class="input" id="hN_equipment" placeholder="e.g. Servers"></div>
+        <div class="field"><div class="label">Location</div><input class="input" id="hN_location" placeholder="e.g. DC1 - Telecom"></div>
+      </div>
+      <div class="grid3">
+        <div class="field"><div class="label">Status</div>
+          <select class="select2" id="hN_status"><option>Working Properly</option><option>Issue Found</option><option>Action Required</option></select>
+        </div>
+        <div class="field"><div class="label">Priority</div>
+          <select class="select2" id="hN_priority"><option>Low</option><option>High</option><option>Critical</option></select>
+        </div>
+        <div class="field"><div class="label">Frequency</div>
+          <select class="select2" id="hN_frequency"><option>Daily</option><option>Weekly</option><option>Monthly</option></select>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field"><div class="label">Checked By</div><input class="input" id="hN_checkedBy" placeholder="Name"></div>
+        <div class="field"><div class="label">Next Check</div><input class="input" id="hN_next" type="date"></div>
+      </div>
+      <div class="field"><div class="label">Notes</div><textarea class="textarea" id="hN_notes" placeholder="Optional notes..."></textarea></div>
+    </div>
+    <div class="sheet-foot">
+      <button class="btn btn-outline" id="hCancelNew" type="button">Cancel</button>
+      <button class="btn btn-yellow" id="hSubmitNew" type="button">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODALS: INCIDENT ================= -->
+<div class="modal" id="iNewModal">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <div class="sheet-head">
+      <div class="sheet-title">Create Incident</div>
+      <button class="xbtn" id="iCloseNew" type="button">✕</button>
+    </div>
+    <div class="sheet-body">
+      <div class="grid3">
+        <div class="field"><div class="label">Date & Time</div><input class="input" id="iN_datetime" type="datetime-local"></div>
+        <div class="field"><div class="label">Section</div>
+          <select class="select2" id="iN_section"><option>NOC</option><option>Core</option><option>RAN</option><option>IT</option></select>
+        </div>
+        <div class="field"><div class="label">Region</div><input class="input" id="iN_region" placeholder="e.g. Berbera"></div>
+      </div>
+      <div class="grid3">
+        <div class="field"><div class="label">Incident Type</div><input class="input" id="iN_type" placeholder="e.g. Power"></div>
+        <div class="field"><div class="label">Severity</div>
+          <select class="select2" id="iN_severity"><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select>
+        </div>
+        <div class="field"><div class="label">Area / Code Name</div><input class="input" id="iN_area" placeholder="e.g. Berbera BTS Site"></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><div class="label">Root Cause</div><input class="input" id="iN_root" placeholder=""></div>
+        <div class="field"><div class="label">Affected Area</div><input class="input" id="iN_affected" placeholder=""></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><div class="label">Corrective Action</div><input class="input" id="iN_fix" placeholder=""></div>
+        <div class="field"><div class="label">Status</div>
+          <select class="select2" id="iN_status"><option>Open</option><option>Investigating</option><option>Resolved</option><option>Closed</option></select>
+        </div>
+      </div>
+      <div class="field"><div class="label">Description</div><textarea class="textarea" id="iN_desc" placeholder="Describe the incident..."></textarea></div>
+      <div class="field"><div class="label">Reported By</div><input class="input" id="iN_reportedBy" placeholder="Name"></div>
+    </div>
+    <div class="sheet-foot">
+      <button class="btn btn-outline" id="iCancelNew" type="button">Cancel</button>
+      <button class="btn btn-yellow" id="iSubmitNew" type="button">Save Incident</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODALS: NIGHT OPERATION ================= -->
+<div class="modal" id="mNewModal">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <div class="sheet-head">
+      <div class="sheet-title">New Operation</div>
+      <button class="xbtn" id="mCloseNew" type="button">✕</button>
+    </div>
+    <div class="sheet-body">
+      <div class="grid2">
+        <div class="field"><div class="label">Title</div><input class="input" id="mN_title" placeholder=""></div>
+        <div class="field"><div class="label">Priority</div><select class="select2" id="mN_priority"><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><div class="label">Sections</div><input class="input" id="mN_sections" placeholder="e.g. NOC, Core"></div>
+        <div class="field"><div class="label">Engineers</div><input class="input" id="mN_engineers" placeholder="e.g. Ahmed, Aisha"></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><div class="label">Start Date</div><input class="input" id="mN_startDate" type="date"></div>
+        <div class="field"><div class="label">End Date</div><input class="input" id="mN_endDate" type="date"></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><div class="label">Start Time</div><input class="input" id="mN_startTime" type="time"></div>
+        <div class="field"><div class="label">End Time</div><input class="input" id="mN_endTime" type="time"></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><div class="label">Operation Description</div><textarea class="textarea" id="mN_desc"></textarea></div>
+        <div class="field"><div class="label">Effects / Risk</div><textarea class="textarea" id="mN_risk"></textarea></div>
+      </div>
+      <div class="field" style="flex-direction:row;align-items:center;gap:10px;">
+        <input id="mN_hasEffects" type="checkbox" style="width:20px;height:20px;">
+        <label for="mN_hasEffects" style="font-weight:var(--w-medium);">Has effect?</label>
+      </div>
+      <div class="grid2">
+        <div class="field"><div class="label">Requested By</div><input class="input" id="mN_requestedBy" placeholder="Name"></div>
+        <div class="field"><div class="label">Status</div><select class="select2" id="mN_status"><option>Pending</option><option>Active</option><option>With Effects</option><option>Completed</option></select></div>
+      </div>
+    </div>
+    <div class="sheet-foot">
+      <button class="btn btn-outline" id="mCancelNew" type="button">Cancel</button>
+      <button class="btn btn-yellow" id="mSubmitNew" type="button">Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const $ = (id)=>document.getElementById(id);
+
+  function showScreen(id){
+    const ids = ['screen-dashboard','screen-technical','screen-network','screen-health','screen-incident','screen-night'];
+    ids.forEach(x=>$(x).classList.add('hidden'));
+    $(id).classList.remove('hidden');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function openModal(id){
+    $(id).classList.add('show');
+    document.body.style.overflow='hidden';
+  }
+  function closeModal(id){
+    $(id).classList.remove('show');
+    document.body.style.overflow='';
+  }
+
+  function pct(v,t){ return t ? Math.round((v/t)*100) : 0; }
+
+  function inDateRange(dateStr, fromStr, toStr){
+    if(!dateStr) return true;
+    const d = new Date(dateStr + 'T00:00:00');
+    if(fromStr){
+      const f = new Date(fromStr + 'T00:00:00');
+      if(d < f) return false;
+    }
+    if(toStr){
+      const t = new Date(toStr + 'T23:59:59');
+      if(d > t) return false;
+    }
+    return true;
+  }
+
+  /* ================= NETWORK DATA ================= */
+  let nSeq = 121;
+  let currentTicket = null;
+
+  const tickets = [
+    {id:'TK-121', createdAt:'2025-12-28 13:59', status:'Closed', priority:'Major', section:'O&M', region:'Maroodi-jeex', resTime:'45 min', desc:'Commercial power issue at Burta-kalajeexan.'},
+    {id:'TK-120', createdAt:'2025-12-28 09:12', status:'Closed', priority:'Major', section:'O&M', region:'Hargeisa', resTime:'5 hr 33 min', desc:'Power outage reported near DC area.'},
+    {id:'TK-119', createdAt:'2025-12-28 02:44', status:'Open', priority:'Major', section:'Core', region:'DC2 - Technical', resTime:'—', desc:'Core alarm observed on NFV.'},
+    {id:'TK-118', createdAt:'2025-12-27 06:17', status:'NOC Confirmation', priority:'Minor', section:'RAN', region:'Gabiley', resTime:'32 hr 36 min', desc:'Site intermittency.'},
+    {id:'TK-117', createdAt:'2025-12-26 08:20', status:'In Progress', priority:'Critical', section:'IT', region:'HQ', resTime:'12 hr', desc:'Server resource issue.'}
+  ];
+
+  function statusChipNet(s){
+    if(s==='Closed') return '<span class="chip" style="background:rgba(72,178,107,.16);border-color:rgba(72,178,107,.22);color:#1b6a35;">Closed</span>';
+    if(s==='Open') return '<span class="chip" style="background:rgba(214,90,68,.16);border-color:rgba(214,90,68,.22);color:#8a2a1c;">Open</span>';
+    if(s==='In Progress') return '<span class="chip" style="background:rgba(241,179,49,.18);border-color:rgba(241,179,49,.22);color:#6f5200;">In Progress</span>';
+    return '<span class="chip" style="background:rgba(107,91,210,.16);border-color:rgba(107,91,210,.22);color:#3b3199;">NOC</span>';
+  }
+
+  function filterNetwork(){
+    const q = ($('nSearch').value||'').trim().toLowerCase();
+    const from = $('nFrom').value;
+    const to = $('nTo').value;
+    const sec = $('nSection').value;
+    const st = $('nStatus').value;
+
+    return tickets.filter(t=>{
+      const createdDate = (t.createdAt||'').slice(0,10);
+      const matchDates = createdDate ? inDateRange(createdDate, from, to) : true;
+      const matchSection = (sec==='All') ? true : t.section===sec;
+      const matchStatus = (st==='All') ? true : t.status===st;
+      const hay = `${t.id} ${t.createdAt} ${t.status} ${t.priority} ${t.section} ${t.region} ${t.desc}`.toLowerCase();
+      const matchQ = q ? hay.includes(q) : true;
+      return matchDates && matchSection && matchStatus && matchQ;
+    });
+  }
+
+  function renderNetwork(){
+    const list = filterNetwork();
+    const total = list.length;
+
+    const open = list.filter(t=>t.status==='Open').length;
+    const prog = list.filter(t=>t.status==='In Progress').length;
+    const noc = list.filter(t=>t.status==='NOC Confirmation').length;
+    const closed = list.filter(t=>t.status==='Closed').length;
+
+    $('nTotal').textContent = total;
+    $('nLblOpen').textContent = `${open} (${pct(open,total)}%)`;
+    $('nLblProgress').textContent = `${prog} (${pct(prog,total)}%)`;
+    $('nLblNoc').textContent = `${noc} (${pct(noc,total)}%)`;
+    $('nLblClosed').textContent = `${closed} (${pct(closed,total)}%)`;
+
+    $('nSegOpen').style.width = pct(open,total)+'%';
+    $('nSegProgress').style.width = pct(prog,total)+'%';
+    $('nSegNoc').style.width = pct(noc,total)+'%';
+    $('nSegClosed').style.width = pct(closed,total)+'%';
+
+    const body = $('nBody');
+    if(!list.length){
+      body.innerHTML = '<tr><td colspan="8" class="empty">No tickets found</td></tr>';
+      return;
+    }
+    body.innerHTML = list.map(t=>`
+      <tr>
+        <td>${t.id}</td>
+        <td>${t.createdAt}</td>
+        <td>${statusChipNet(t.status)}</td>
+        <td><span class="chip">${t.priority}</span></td>
+        <td>${t.section}</td>
+        <td>${t.region}</td>
+        <td>${t.resTime}</td>
+        <td><button class="eye js-n-view" data-id="${t.id}" type="button">👁</button></td>
+      </tr>
+    `).join('');
+  }
+
+  function nextTicketId(){ nSeq += 1; return `TK-${nSeq}`; }
+
+  function openTicketDetail(id){
+    const t = tickets.find(x=>x.id===id);
+    if(!t) return;
+    currentTicket = t;
+    $('nD_id').value = t.id;
+    $('nD_status').value = t.status;
+    $('nD_section').value = t.section;
+    $('nD_region').value = t.region;
+    $('nD_desc').value = t.desc;
+    openModal('nDetailModal');
+  }
+
+  function openNewTicket(){
+    $('nN_id').value = nextTicketId();
+    $('nN_status').value = 'Open';
+    $('nN_priority').value = 'Major';
+    $('nN_section').value = 'O&M';
+    $('nN_region').value = '';
+    $('nN_restime').value = '';
+    $('nN_desc').value = '';
+    openModal('nNewModal');
+  }
+
+  function submitNewTicket(){
+    const id = $('nN_id').value.trim();
+    const createdAt = new Date().toISOString().slice(0,10) + ' 09:00';
+    tickets.unshift({
+      id,
+      createdAt,
+      status: $('nN_status').value,
+      priority: $('nN_priority').value,
+      section: $('nN_section').value,
+      region: $('nN_region').value.trim() || '—',
+      resTime: $('nN_restime').value.trim() || '—',
+      desc: $('nN_desc').value.trim() || '—'
+    });
+    closeModal('nNewModal');
+    renderNetwork();
+  }
+
+  /* ================= HEALTH DATA ================= */
+  let hSeq = 57;
+
+  const checks = [
+    {id:'HC_57', date:'2025-11-20', section:'IT', equipment:'Servers', location:'DC1 - Telecom', status:'Working Properly', priority:'High', frequency:'Daily', checkedBy:'Ahmed Abdi', next:'2025-11-21'},
+    {id:'HC_56', date:'2025-11-08', section:'IT', equipment:'Laptops', location:'DC1 - Telecom', status:'Working Properly', priority:'Low', frequency:'Daily', checkedBy:'Ahmed Hussein', next:'2025-11-09'},
+    {id:'HC_54', date:'2025-10-11', section:'Core', equipment:'eSight-NFV', location:'DC2 - Technical', status:'Issue Found', priority:'High', frequency:'Daily', checkedBy:'Mohamed Ahmed', next:'2025-10-12'}
+  ];
+
+  function nextCheckId(){ hSeq += 1; return `HC_${hSeq}`; }
+
+  function filterHealth(){
+    const q = ($('hSearch').value||'').trim().toLowerCase();
+    const from = $('hFrom').value;
+    const to = $('hTo').value;
+    const sec = $('hSection').value;
+    const st = $('hStatus').value;
+
+    return checks.filter(c=>{
+      const matchDates = inDateRange(c.date, from, to);
+      const matchSection = (sec==='All') ? true : c.section===sec;
+      const matchStatus = (st==='All') ? true : c.status===st;
+      const hay = `${c.id} ${c.date} ${c.section} ${c.equipment} ${c.location} ${c.status} ${c.checkedBy}`.toLowerCase();
+      const matchQ = q ? hay.includes(q) : true;
+      return matchDates && matchSection && matchStatus && matchQ;
+    });
+  }
+
+  function renderHealth(){
+    const list = filterHealth();
+    const total = list.length;
+
+    const working = list.filter(x=>x.status==='Working Properly').length;
+    const issue = list.filter(x=>x.status==='Issue Found').length;
+    const action = list.filter(x=>x.status==='Action Required').length;
+    const healthyPct = total ? Math.round((working/total)*100) : 0;
+
+    $('hTotal').textContent = total;
+    $('hLblWorking').textContent = `${working} (${pct(working,total)}%)`;
+    $('hLblIssue').textContent = `${issue} (${pct(issue,total)}%)`;
+    $('hLblAction').textContent = `${action} (${pct(action,total)}%)`;
+    $('hLblHealthy').textContent = `${working} (${healthyPct}%)`;
+
+    $('hSegWorking').style.width = pct(working,total)+'%';
+    $('hSegIssue').style.width = pct(issue,total)+'%';
+    $('hSegAction').style.width = pct(action,total)+'%';
+    $('hSegHealthy').style.width = pct(working,total)+'%';
+
+    const body = $('hBody');
+    if(!list.length){
+      body.innerHTML = '<tr><td colspan="11" class="empty">No logs found.</td></tr>';
+      return;
+    }
+    body.innerHTML = list.map(c=>`
+      <tr>
+        <td>${c.id}</td>
+        <td>${c.date}</td>
+        <td>${c.section}</td>
+        <td>${c.equipment}</td>
+        <td>${c.location}</td>
+        <td><span class="chip">${c.status}</span></td>
+        <td><span class="chip">${c.priority}</span></td>
+        <td>${c.frequency}</td>
+        <td>${c.checkedBy}</td>
+        <td>${c.next}</td>
+        <td><button class="eye" type="button">👁</button></td>
+      </tr>
+    `).join('');
+  }
+
+  function openNewCheck(){
+    $('hN_id').value = nextCheckId();
+    $('hN_date').value = new Date().toISOString().slice(0,10);
+    $('hN_section').value = 'IT';
+    $('hN_equipment').value = '';
+    $('hN_location').value = '';
+    $('hN_status').value = 'Working Properly';
+    $('hN_priority').value = 'Low';
+    $('hN_frequency').value = 'Daily';
+    $('hN_checkedBy').value = '';
+    $('hN_next').value = '';
+    $('hN_notes').value = '';
+    openModal('hNewModal');
+  }
+
+  function submitNewCheck(){
+    checks.unshift({
+      id: $('hN_id').value.trim(),
+      date: $('hN_date').value || new Date().toISOString().slice(0,10),
+      section: $('hN_section').value,
+      equipment: $('hN_equipment').value.trim() || '—',
+      location: $('hN_location').value.trim() || '—',
+      status: $('hN_status').value,
+      priority: $('hN_priority').value,
+      frequency: $('hN_frequency').value,
+      checkedBy: $('hN_checkedBy').value.trim() || '—',
+      next: $('hN_next').value || '—'
+    });
+    closeModal('hNewModal');
+    renderHealth();
+  }
+
+  /* ================= INCIDENT DATA ================= */
+  let iSeq = 100;
+
+  const incidents = [
+    {code:'INC-100', date:'2025-12-30', type:'Power', section:'NOC', region:'Hargeisa', severity:'High', status:'Open', reportedBy:'Aisha Ibrahim'}
+  ];
+
+  function nextIncidentCode(){ iSeq += 1; return `INC-${iSeq}`; }
+
+  function filterIncident(){
+    const q = ($('iSearch').value||'').trim().toLowerCase();
+    const from = $('iFrom').value;
+    const to = $('iTo').value;
+    const sec = $('iSection').value;
+    const st = $('iStatus').value;
+
+    return incidents.filter(x=>{
+      const matchDates = inDateRange(x.date, from, to);
+      const matchSection = (sec==='All') ? true : x.section===sec;
+      const matchStatus = (st==='All') ? true : x.status===st;
+      const hay = `${x.code} ${x.date} ${x.type} ${x.section} ${x.region} ${x.severity} ${x.status} ${x.reportedBy}`.toLowerCase();
+      const matchQ = q ? hay.includes(q) : true;
+      return matchDates && matchSection && matchStatus && matchQ;
+    });
+  }
+
+  function renderIncident(){
+    const list = filterIncident();
+    const total = list.length;
+
+    const open = list.filter(x=>x.status==='Open').length;
+    const inv = list.filter(x=>x.status==='Investigating').length;
+    const res = list.filter(x=>x.status==='Resolved').length;
+    const closed = list.filter(x=>x.status==='Closed').length;
+
+    $('iTotal').textContent = total;
+    $('iLblOpen').textContent = `${open} (${pct(open,total)}%)`;
+    $('iLblInvestigating').textContent = `${inv} (${pct(inv,total)}%)`;
+    $('iLblResolved').textContent = `${res} (${pct(res,total)}%)`;
+    $('iLblClosed').textContent = `${closed} (${pct(closed,total)}%)`;
+
+    $('iSegOpen').style.width = pct(open,total)+'%';
+    $('iSegInvestigating').style.width = pct(inv,total)+'%';
+    $('iSegResolved').style.width = pct(res,total)+'%';
+    $('iSegClosed').style.width = pct(closed,total)+'%';
+
+    const body = $('iBody');
+    if(!list.length){
+      body.innerHTML = '<tr><td colspan="9" class="empty">No data available in table</td></tr>';
+      return;
+    }
+    body.innerHTML = list.map(x=>`
+      <tr>
+        <td>${x.code}</td>
+        <td>${x.date}</td>
+        <td>${x.type}</td>
+        <td>${x.section}</td>
+        <td>${x.region}</td>
+        <td><span class="chip">${x.severity}</span></td>
+        <td><span class="chip">${x.status}</span></td>
+        <td>${x.reportedBy}</td>
+        <td><button class="eye" type="button">👁</button></td>
+      </tr>
+    `).join('');
+  }
+
+  function openNewIncident(){
+    $('iN_datetime').value = new Date().toISOString().slice(0,16);
+    $('iN_section').value = 'NOC';
+    $('iN_region').value = '';
+    $('iN_type').value = '';
+    $('iN_severity').value = 'Medium';
+    $('iN_area').value = '';
+    $('iN_root').value = '';
+    $('iN_affected').value = '';
+    $('iN_fix').value = '';
+    $('iN_status').value = 'Open';
+    $('iN_desc').value = '';
+    $('iN_reportedBy').value = '';
+    openModal('iNewModal');
+  }
+
+  function submitNewIncident(){
+    const dt = $('iN_datetime').value;
+    const date = dt ? dt.slice(0,10) : new Date().toISOString().slice(0,10);
+    incidents.unshift({
+      code: nextIncidentCode(),
+      date,
+      type: $('iN_type').value.trim() || '—',
+      section: $('iN_section').value,
+      region: $('iN_region').value.trim() || '—',
+      severity: $('iN_severity').value,
+      status: $('iN_status').value,
+      reportedBy: $('iN_reportedBy').value.trim() || '—'
+    });
+    closeModal('iNewModal');
+    renderIncident();
+  }
+
+  /* ================= NIGHT OP DATA ================= */
+  let mSeq = 200;
+
+  const operations = [
+    {id:'OP-200', requestDate:'2025-12-30', title:'Core upgrade', priority:'High', startTime:'00:00', endTime:'02:00', hasEffects:'Yes', requestedBy:'NOC', nocApproval:'Pending', ctoApproval:'Pending', status:'Pending', section:'NOC'}
+  ];
+
+  function nextOpId(){ mSeq += 1; return `OP-${mSeq}`; }
+
+  function filterNight(){
+    const q = ($('mSearch').value||'').trim().toLowerCase();
+    const from = $('mFrom').value;
+    const to = $('mTo').value;
+    const sec = $('mSection').value;
+    const st = $('mStatus').value;
+
+    return operations.filter(x=>{
+      const matchDates = inDateRange(x.requestDate, from, to);
+      const matchSection = (sec==='All') ? true : x.section===sec;
+      const matchStatus =
+        (st==='All') ? true :
+        (st==='With Effects' ? x.status==='With Effects' : x.status===st);
+
+      const hay = `${x.id} ${x.requestDate} ${x.title} ${x.priority} ${x.requestedBy} ${x.status}`.toLowerCase();
+      const matchQ = q ? hay.includes(q) : true;
+
+      return matchDates && matchSection && matchStatus && matchQ;
+    });
+  }
+
+  function renderNight(){
+    const list = filterNight();
+    const total = list.length;
+
+    const active = list.filter(x=>x.status==='Active').length;
+    const withEffects = list.filter(x=>x.status==='With Effects').length;
+    const pending = list.filter(x=>x.status==='Pending').length;
+    const completed = list.filter(x=>x.status==='Completed').length;
+
+    $('mTotal').textContent = total;
+    $('mLblActive').textContent = `${active} (${pct(active,total)}%)`;
+    $('mLblWithEffects').textContent = `${withEffects} (${pct(withEffects,total)}%)`;
+    $('mLblPending').textContent = `${pending} (${pct(pending,total)}%)`;
+    $('mLblCompleted').textContent = `${completed} (${pct(completed,total)}%)`;
+
+    $('mSegActive').style.width = pct(active,total)+'%';
+    $('mSegWithEffects').style.width = pct(withEffects,total)+'%';
+    $('mSegPending').style.width = pct(pending,total)+'%';
+    $('mSegCompleted').style.width = pct(completed,total)+'%';
+
+    const body = $('mBody');
+    if(!list.length){
+      body.innerHTML = '<tr><td colspan="12" class="empty">No matching records found</td></tr>';
+      return;
+    }
+    body.innerHTML = list.map(x=>`
+      <tr>
+        <td>${x.id}</td>
+        <td>${x.requestDate}</td>
+        <td>${x.title}</td>
+        <td><span class="chip">${x.priority}</span></td>
+        <td>${x.startTime}</td>
+        <td>${x.endTime}</td>
+        <td>${x.hasEffects}</td>
+        <td>${x.requestedBy}</td>
+        <td>${x.nocApproval}</td>
+        <td>${x.ctoApproval}</td>
+        <td><span class="chip">${x.status}</span></td>
+        <td><button class="eye" type="button">👁</button></td>
+      </tr>
+    `).join('');
+  }
+
+  function openNewOperation(){
+    $('mN_title').value = '';
+    $('mN_priority').value = 'Low';
+    $('mN_sections').value = '';
+    $('mN_engineers').value = '';
+    $('mN_startDate').value = new Date().toISOString().slice(0,10);
+    $('mN_endDate').value = '';
+    $('mN_startTime').value = '00:00';
+    $('mN_endTime').value = '';
+    $('mN_desc').value = '';
+    $('mN_risk').value = '';
+    $('mN_hasEffects').checked = false;
+    $('mN_requestedBy').value = '';
+    $('mN_status').value = 'Pending';
+    openModal('mNewModal');
+  }
+
+  function submitNewOperation(){
+    operations.unshift({
+      id: nextOpId(),
+      requestDate: $('mN_startDate').value || new Date().toISOString().slice(0,10),
+      title: $('mN_title').value.trim() || '—',
+      priority: $('mN_priority').value,
+      startTime: $('mN_startTime').value || '—',
+      endTime: $('mN_endTime').value || '—',
+      hasEffects: $('mN_hasEffects').checked ? 'Yes' : 'No',
+      requestedBy: $('mN_requestedBy').value.trim() || '—',
+      nocApproval: 'Pending',
+      ctoApproval: 'Pending',
+      status: $('mN_status').value,
+      section: ($('mSection').value==='All' ? 'NOC' : $('mSection').value)
+    });
+    closeModal('mNewModal');
+    renderNight();
+  }
+
+  /* ================= EVENTS ================= */
+  document.addEventListener('DOMContentLoaded', ()=>{
+    // navigation
+    $('goTechnical').addEventListener('click', ()=>showScreen('screen-technical'));
+    $('backDash').addEventListener('click', ()=>showScreen('screen-dashboard'));
+
+    $('goNetwork').addEventListener('click', ()=>{ showScreen('screen-network'); renderNetwork(); });
+    $('goHealth').addEventListener('click', ()=>{ showScreen('screen-health'); renderHealth(); });
+    $('goIncident').addEventListener('click', ()=>{ showScreen('screen-incident'); renderIncident(); });
+    $('goNight').addEventListener('click', ()=>{ showScreen('screen-night'); renderNight(); });
+
+    $('backTechFromNetwork').addEventListener('click', ()=>showScreen('screen-technical'));
+    $('backTechFromHealth').addEventListener('click', ()=>showScreen('screen-technical'));
+    $('backTechFromIncident').addEventListener('click', ()=>showScreen('screen-technical'));
+    $('backTechFromNight').addEventListener('click', ()=>showScreen('screen-technical'));
+
+    // network filters
+    ['nFrom','nTo','nSection','nStatus'].forEach(id=>$(id).addEventListener('change', renderNetwork));
+    $('nSearch').addEventListener('input', renderNetwork);
+
+    $('nBody').addEventListener('click', (e)=>{
+      const b = e.target.closest('.js-n-view');
+      if(!b) return;
+      openTicketDetail(b.dataset.id);
+    });
+
+    $('nFab').addEventListener('click', openNewTicket);
+    $('nSubmitNew').addEventListener('click', submitNewTicket);
+    $('nCancelNew').addEventListener('click', ()=>closeModal('nNewModal'));
+    $('nCloseNew').addEventListener('click', ()=>closeModal('nNewModal'));
+    $('nNewModal').addEventListener('click', (e)=>{ if(e.target.id==='nNewModal') closeModal('nNewModal'); });
+
+    $('nCloseDetail').addEventListener('click', ()=>closeModal('nDetailModal'));
+    $('nCloseDetail2').addEventListener('click', ()=>closeModal('nDetailModal'));
+    $('nDetailModal').addEventListener('click', (e)=>{ if(e.target.id==='nDetailModal') closeModal('nDetailModal'); });
+
+    // health filters
+    ['hFrom','hTo','hSection','hStatus'].forEach(id=>$(id).addEventListener('change', renderHealth));
+    $('hSearch').addEventListener('input', renderHealth);
+
+    $('hFab').addEventListener('click', openNewCheck);
+    $('hSubmitNew').addEventListener('click', submitNewCheck);
+    $('hCancelNew').addEventListener('click', ()=>closeModal('hNewModal'));
+    $('hCloseNew').addEventListener('click', ()=>closeModal('hNewModal'));
+    $('hNewModal').addEventListener('click', (e)=>{ if(e.target.id==='hNewModal') closeModal('hNewModal'); });
+
+    // incident filters
+    ['iFrom','iTo','iSection','iStatus'].forEach(id=>$(id).addEventListener('change', renderIncident));
+    $('iSearch').addEventListener('input', renderIncident);
+
+    $('iFab').addEventListener('click', openNewIncident);
+    $('iSubmitNew').addEventListener('click', submitNewIncident);
+    $('iCancelNew').addEventListener('click', ()=>closeModal('iNewModal'));
+    $('iCloseNew').addEventListener('click', ()=>closeModal('iNewModal'));
+    $('iNewModal').addEventListener('click', (e)=>{ if(e.target.id==='iNewModal') closeModal('iNewModal'); });
+
+    // night filters
+    ['mFrom','mTo','mSection','mStatus'].forEach(id=>$(id).addEventListener('change', renderNight));
+    $('mSearch').addEventListener('input', renderNight);
+
+    $('mFab').addEventListener('click', openNewOperation);
+    $('mSubmitNew').addEventListener('click', submitNewOperation);
+    $('mCancelNew').addEventListener('click', ()=>closeModal('mNewModal'));
+    $('mCloseNew').addEventListener('click', ()=>closeModal('mNewModal'));
+    $('mNewModal').addEventListener('click', (e)=>{ if(e.target.id==='mNewModal') closeModal('mNewModal'); });
+
+    // start
+    showScreen('screen-dashboard');
+  });
+</script>
+</body>
+</html>
