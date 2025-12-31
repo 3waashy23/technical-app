@@ -702,6 +702,158 @@
       .menu-text{ font-size: 14px !important; }
     }
 
+
+
+    /* ================= KPI BLOCK (TECHNICAL PAGE) ================= */
+    /* Scoped + uniquely named to avoid touching existing design */
+    .kpi-wrap{ margin-bottom:14px; }
+    .kpi-range-bar{
+      display:flex;
+      gap:6px;
+      overflow-x:auto;
+      padding-bottom:8px;
+      margin-bottom:10px;
+    }
+    .kpi-range-chip{
+      border: 1px solid var(--gold);
+      background:#fff;
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:11px;
+      color:#8a6a00;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .kpi-range-chip.active{
+      background: var(--gold);
+      color:#111827;
+      border-color: var(--gold);
+    }
+
+    .kpi-card-grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap:12px;
+    }
+    @media (max-width: 360px){
+      .kpi-card-grid{ grid-template-columns:1fr; }
+    }
+
+    .kpi-card{
+      background:#fff;
+      border-radius:18px;
+      border:1px solid rgba(15,23,42,0.08);
+      box-shadow: 0 14px 28px rgba(15,23,42,0.10);
+      padding:10px 10px 8px;
+    }
+    .kpi-card-header{
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:6px;
+      margin-bottom:4px;
+    }
+    .kpi-title-wrap{
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    .kpi-icon-wrap{
+      width:28px;height:28px;
+      border-radius:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:16px;
+      border:1px solid rgba(148,163,184,0.4);
+    }
+    .kpi-card-title{
+      font-size:13px;
+      font-weight:600;
+    }
+
+    .kpi-main-row{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:2px;
+    }
+    .kpi-main-block{ flex:1; }
+    .kpi-main-block.right{ text-align:right; }
+    .kpi-main-label{ font-size:11px; color:#6b7280; }
+    .kpi-main-value{
+      font-size:20px;
+      font-weight:600;
+      letter-spacing:0.02em;
+      margin-top:1px;
+      transition: color .18s ease, transform .18s ease;
+    }
+    .kpi-main-value.kpi-active{
+      color:#b45309;
+      transform:scale(1.04);
+    }
+
+    .kpi-progress{
+      margin-top:6px;
+      margin-bottom:4px;
+      height:6px;
+      border-radius:999px;
+      background:#e5e7eb;
+      overflow:hidden;
+    }
+    .kpi-progress-fill{ height:100%; width:0%; border-radius:999px; }
+
+    .kpi-chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:4px;
+      margin-top:4px;
+    }
+    .kpi-chip{
+      padding:3px 6px;
+      border-radius:999px;
+      background: rgba(15,23,42,0.03);
+      border:1px solid rgba(148,163,184,0.5);
+      font-size:10px;
+      color:#4b5563;
+      display:inline-flex;
+      align-items:baseline;
+      gap:3px;
+      white-space:nowrap;
+    }
+    .kpi-chip-label{ opacity:.9; }
+    .kpi-chip-value{ font-weight:600; color:#111827; }
+
+    /* accent colors per card */
+    .kpi-card-health .kpi-icon-wrap{
+      background:#eef2ff;
+      border-color: rgba(129,140,248,0.7);
+      color:#4f46e5;
+    }
+    .kpi-card-health .kpi-progress-fill{ background:#4f46e5; }
+
+    .kpi-card-tickets .kpi-icon-wrap{
+      background:#fff7ed;
+      border-color: rgba(248,171,75,0.8);
+      color:#ea580c;
+    }
+    .kpi-card-tickets .kpi-progress-fill{ background:#f97316; }
+
+    .kpi-card-incidents .kpi-icon-wrap{
+      background:#fef2f2;
+      border-color: rgba(248,113,113,0.9);
+      color:#b91c1c;
+    }
+    .kpi-card-incidents .kpi-progress-fill{ background:#f97373; }
+
+    .kpi-card-ops .kpi-icon-wrap{
+      background:#f1f5f9;
+      border-color: rgba(96,165,250,0.8);
+      color:#0f766e;
+    }
+    .kpi-card-ops .kpi-progress-fill{ background:#0f766e; }
+
 </style>
 </head>
 
@@ -788,6 +940,146 @@
     </div>
 
     <div class="page">
+
+      <!-- ================= KPI SUMMARY (INSERTED) ================= -->
+      <div class="kpi-wrap" id="technicalKpis">
+
+        <div class="kpi-range-bar">
+          <button class="kpi-range-chip active" data-range="today" type="button">Today</button>
+          <button class="kpi-range-chip" data-range="week" type="button">This week</button>
+          <button class="kpi-range-chip" data-range="month" type="button">This month</button>
+          <button class="kpi-range-chip" data-range="quarter" type="button">This quarter</button>
+          <button class="kpi-range-chip" data-range="year" type="button">This year</button>
+        </div>
+
+        <div class="kpi-card-grid">
+
+          <!-- System Health -->
+          <div class="kpi-card kpi-card-health">
+            <div class="kpi-card-header">
+              <div class="kpi-title-wrap">
+                <div class="kpi-icon-wrap">🩺</div>
+                <div class="kpi-card-title">System Health</div>
+              </div>
+            </div>
+
+            <div class="kpi-main-row">
+              <div class="kpi-main-block">
+                <div class="kpi-main-label">Health</div>
+                <div class="kpi-main-value" id="healthValue">92%</div>
+              </div>
+              <div class="kpi-main-block right">
+                <div class="kpi-main-label">Issues</div>
+                <div class="kpi-main-value" id="healthIssues">3</div>
+              </div>
+            </div>
+
+            <div class="kpi-progress">
+              <div class="kpi-progress-fill" id="healthBar" style="width:92%;"></div>
+            </div>
+
+            <div class="kpi-chips">
+              <div class="kpi-chip"><span class="kpi-chip-label">Action</span><span class="kpi-chip-value" id="healthAction">1</span></div>
+              <div class="kpi-chip"><span class="kpi-chip-label">Checks</span><span class="kpi-chip-value" id="healthChecks">124</span></div>
+              <div class="kpi-chip"><span class="kpi-chip-label">OK</span><span class="kpi-chip-value" id="healthOk">121</span></div>
+            </div>
+          </div>
+
+          <!-- Tickets -->
+          <div class="kpi-card kpi-card-tickets">
+            <div class="kpi-card-header">
+              <div class="kpi-title-wrap">
+                <div class="kpi-icon-wrap">🎫</div>
+                <div class="kpi-card-title">Tickets</div>
+              </div>
+            </div>
+
+            <div class="kpi-main-row">
+              <div class="kpi-main-block">
+                <div class="kpi-main-label">Pending</div>
+                <div class="kpi-main-value" id="ticketsPending">32%</div>
+              </div>
+              <div class="kpi-main-block right">
+                <div class="kpi-main-label">Completed</div>
+                <div class="kpi-main-value" id="ticketsCompleted">68%</div>
+              </div>
+            </div>
+
+            <div class="kpi-progress">
+              <div class="kpi-progress-fill" id="ticketsBar" style="width:68%;"></div>
+            </div>
+
+            <div class="kpi-chips">
+              <div class="kpi-chip"><span class="kpi-chip-label">Total</span><span class="kpi-chip-value" id="ticketsTotal">53</span></div>
+              <div class="kpi-chip"><span class="kpi-chip-label">Open</span><span class="kpi-chip-value" id="ticketsOpen">17</span></div>
+              <div class="kpi-chip"><span class="kpi-chip-label">Closed</span><span class="kpi-chip-value" id="ticketsClosed">36</span></div>
+            </div>
+          </div>
+
+          <!-- Incidents -->
+          <div class="kpi-card kpi-card-incidents">
+            <div class="kpi-card-header">
+              <div class="kpi-title-wrap">
+                <div class="kpi-icon-wrap">⚠️</div>
+                <div class="kpi-card-title">Incidents</div>
+              </div>
+            </div>
+
+            <div class="kpi-main-row">
+              <div class="kpi-main-block">
+                <div class="kpi-main-label">Open</div>
+                <div class="kpi-main-value" id="incidentsOpen">4</div>
+              </div>
+              <div class="kpi-main-block right">
+                <div class="kpi-main-label">Critical</div>
+                <div class="kpi-main-value" id="incidentsCritical">1</div>
+              </div>
+            </div>
+
+            <div class="kpi-progress">
+              <div class="kpi-progress-fill" id="incidentsBar" style="width:44%;"></div>
+            </div>
+
+            <div class="kpi-chips">
+              <div class="kpi-chip"><span class="kpi-chip-label">Total</span><span class="kpi-chip-value" id="incidentsTotal">9</span></div>
+              <div class="kpi-chip"><span class="kpi-chip-label">Closed</span><span class="kpi-chip-value" id="incidentsClosed">5</span></div>
+            </div>
+          </div>
+
+          <!-- Operations -->
+          <div class="kpi-card kpi-card-ops">
+            <div class="kpi-card-header">
+              <div class="kpi-title-wrap">
+                <div class="kpi-icon-wrap">🌙</div>
+                <div class="kpi-card-title">Operations</div>
+              </div>
+            </div>
+
+            <div class="kpi-main-row">
+              <div class="kpi-main-block">
+                <div class="kpi-main-label">Active</div>
+                <div class="kpi-main-value" id="opsActive">2</div>
+              </div>
+              <div class="kpi-main-block right">
+                <div class="kpi-main-label">Impact</div>
+                <div class="kpi-main-value" id="opsImpact">18%</div>
+              </div>
+            </div>
+
+            <div class="kpi-progress">
+              <div class="kpi-progress-fill" id="opsBar" style="width:18%;"></div>
+            </div>
+
+            <div class="kpi-chips">
+              <div class="kpi-chip"><span class="kpi-chip-label">Total</span><span class="kpi-chip-value" id="opsTotal">11</span></div>
+              <div class="kpi-chip"><span class="kpi-chip-label">Completed</span><span class="kpi-chip-value" id="opsCompleted">9</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- ================= /KPI SUMMARY ================= -->
+
       <div class="menu-panel">
         <div class="menu-item" id="goNetwork" role="button" tabindex="0">
           <div class="menu-left">
@@ -1852,7 +2144,115 @@
   }
 
   /* ================= EVENTS ================= */
-  document.addEventListener('DOMContentLoaded', ()=>{
+  
+  /* ================= TECHNICAL KPI JS (INSERTED) ================= */
+  const kpiSampleData = {
+    today: {
+      health: { health: 95, issues: 1, action: 0, checks: 18, ok: 17 },
+      tickets: { pending: 25, completed: 75, total: 8, open: 2, closed: 6 },
+      incidents: { open: 1, critical: 0, total: 1, closed: 0 },
+      ops: { active: 1, impact: 12, total: 2, completed: 1 }
+    },
+    week: {
+      health: { health: 92, issues: 3, action: 1, checks: 124, ok: 121 },
+      tickets: { pending: 32, completed: 68, total: 53, open: 17, closed: 36 },
+      incidents: { open: 4, critical: 1, total: 9, closed: 5 },
+      ops: { active: 2, impact: 18, total: 11, completed: 9 }
+    },
+    month: {
+      health: { health: 90, issues: 7, action: 3, checks: 510, ok: 503 },
+      tickets: { pending: 28, completed: 72, total: 210, open: 59, closed: 151 },
+      incidents: { open: 6, critical: 2, total: 22, closed: 16 },
+      ops: { active: 3, impact: 16, total: 35, completed: 29 }
+    },
+    quarter: {
+      health: { health: 88, issues: 16, action: 6, checks: 1520, ok: 1490 },
+      tickets: { pending: 30, completed: 70, total: 670, open: 201, closed: 469 },
+      incidents: { open: 9, critical: 3, total: 61, closed: 52 },
+      ops: { active: 4, impact: 20, total: 96, completed: 80 }
+    },
+    year: {
+      health: { health: 91, issues: 40, action: 12, checks: 6150, ok: 6110 },
+      tickets: { pending: 27, completed: 73, total: 2640, open: 713, closed: 1927 },
+      incidents: { open: 11, critical: 4, total: 205, closed: 194 },
+      ops: { active: 5, impact: 14, total: 380, completed: 342 }
+    }
+  };
+
+  function kpiSetText(id, val){
+    const el = document.getElementById(id);
+    if(el) el.textContent = val;
+  }
+  function kpiSetWidth(id, pct){
+    const el = document.getElementById(id);
+    if(el) el.style.width = pct + '%';
+  }
+
+  function kpiFlash(){
+    document.querySelectorAll('#technicalKpis .kpi-main-value').forEach(el=>el.classList.add('kpi-active'));
+    setTimeout(()=>{
+      document.querySelectorAll('#technicalKpis .kpi-main-value').forEach(el=>el.classList.remove('kpi-active'));
+    }, 200);
+  }
+
+  function kpiUpdate(rangeKey){
+    const data = kpiSampleData[rangeKey];
+    if(!data) return;
+
+    // Health
+    kpiSetText('healthValue', data.health.health + '%');
+    kpiSetText('healthIssues', data.health.issues);
+    kpiSetText('healthAction', data.health.action);
+    kpiSetText('healthChecks', data.health.checks);
+    kpiSetText('healthOk', data.health.ok);
+    kpiSetWidth('healthBar', data.health.health);
+
+    // Tickets
+    kpiSetText('ticketsPending', data.tickets.pending + '%');
+    kpiSetText('ticketsCompleted', data.tickets.completed + '%');
+    kpiSetText('ticketsTotal', data.tickets.total);
+    kpiSetText('ticketsOpen', data.tickets.open);
+    kpiSetText('ticketsClosed', data.tickets.closed);
+    kpiSetWidth('ticketsBar', data.tickets.completed);
+
+    // Incidents
+    kpiSetText('incidentsOpen', data.incidents.open);
+    kpiSetText('incidentsCritical', data.incidents.critical);
+    kpiSetText('incidentsTotal', data.incidents.total);
+    kpiSetText('incidentsClosed', data.incidents.closed);
+    const openPct = data.incidents.total > 0 ? Math.round((data.incidents.open / data.incidents.total) * 100) : 0;
+    kpiSetWidth('incidentsBar', openPct);
+
+    // Ops
+    kpiSetText('opsActive', data.ops.active);
+    kpiSetText('opsImpact', data.ops.impact + '%');
+    kpiSetText('opsTotal', data.ops.total);
+    kpiSetText('opsCompleted', data.ops.completed);
+    kpiSetWidth('opsBar', data.ops.impact);
+
+    kpiFlash();
+  }
+
+  function initTechnicalKpis(){
+    const wrap = document.getElementById('technicalKpis');
+    if(!wrap) return;
+
+    const chips = wrap.querySelectorAll('.kpi-range-chip');
+    chips.forEach(chip=>{
+      chip.addEventListener('click', function(){
+        const key = this.dataset.range;
+        chips.forEach(c=>c.classList.toggle('active', c.dataset.range === key));
+        kpiUpdate(key);
+      });
+    });
+
+    // initial state
+    kpiUpdate('today');
+  }
+  /* ================= /TECHNICAL KPI JS ================= */
+
+
+document.addEventListener('DOMContentLoaded', ()=>{
     // navigation
     $('goTechnical').addEventListener('click', ()=>showScreen('screen-technical'));
     $('backDash').addEventListener('click', ()=>showScreen('screen-dashboard'));
@@ -1918,6 +2318,7 @@
     $('mNewModal').addEventListener('click', (e)=>{ if(e.target.id==='mNewModal') closeModal('mNewModal'); });
 
     // start
+    initTechnicalKpis();
     showScreen('screen-dashboard');
   });
 </script>
